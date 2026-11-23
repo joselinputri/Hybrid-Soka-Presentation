@@ -1,0 +1,425 @@
+/*
+ * Observatorium Split Presentation Layout
+ * Left: Clean, high-impact presentation cards and controls
+ * Right: Dedicated, interactive, clearly visible 3D Canvas Box
+ */
+
+:root {
+  --bg-deep: #030718;
+  --bg-card: rgba(10, 18, 42, 0.85);
+  --card-border: rgba(148, 163, 184, 0.18);
+  --border-gold: rgba(251, 191, 36, 0.5);
+
+  --amber: #fbbf24;
+  --amber-soft: #fef3c7;
+  --cyan: #38bdf8;
+  --violet: #a855f7;
+  --emerald: #34d399;
+  --coral: #f43f5e;
+
+  --ink-primary: #ffffff;
+  --ink-secondary: #94a3b8;
+  --ink-muted: #64748b;
+
+  --font-display: 'Sora', system-ui, -apple-system, sans-serif;
+  --font-body: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Red Hat Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  color: var(--ink-primary);
+  font-family: var(--font-body);
+  user-select: none;
+}
+
+/* Presentation Container */
+.deck-root {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 44px 28px;
+  background:
+    radial-gradient(1000px 600px at 85% 10%, rgba(168, 85, 247, 0.12), transparent 70%),
+    radial-gradient(800px 500px at 15% 90%, rgba(56, 189, 248, 0.12), transparent 70%),
+    linear-gradient(180deg, #050b24 0%, #030718 100%);
+}
+
+/* Top Nav */
+.deck-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.brand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(10, 18, 42, 0.85);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(14px);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-secondary);
+}
+
+.brand-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 10px var(--amber);
+}
+
+.nav-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(10, 18, 42, 0.7);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(14px);
+}
+
+.dot-btn {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
+  background: rgba(148, 163, 184, 0.25);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.dot-btn:hover {
+  background: rgba(148, 163, 184, 0.6);
+}
+
+.dot-btn.active {
+  width: 28px;
+  border-radius: 6px;
+  background: var(--amber);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+}
+
+.top-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  background: rgba(10, 18, 42, 0.85);
+  color: var(--ink-secondary);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: all 0.2s;
+}
+
+.icon-btn:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+/* Main Split View: Left (Content) + Right (Dedicated 3D Viewport) */
+.deck-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 1.15fr;
+  gap: 28px;
+  min-height: 0;
+}
+
+/* Left Slide Panel */
+.slide-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+}
+
+.slide-kicker {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  margin-bottom: 10px;
+}
+
+.slide-title {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.slide-lead {
+  margin: 0 0 24px;
+  font-size: 19px;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+}
+
+/* Cards */
+.clean-card {
+  padding: 22px 26px;
+  border-radius: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(20px);
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.card-gold {
+  border-color: rgba(251, 191, 36, 0.35);
+  background: linear-gradient(155deg, rgba(251, 191, 36, 0.08) 0%, rgba(10, 18, 42, 0.9) 100%);
+}
+
+.card-cyan {
+  border-color: rgba(56, 189, 248, 0.35);
+  background: linear-gradient(155deg, rgba(56, 189, 248, 0.08) 0%, rgba(10, 18, 42, 0.9) 100%);
+}
+
+.card-violet {
+  border-color: rgba(168, 85, 247, 0.35);
+  background: linear-gradient(155deg, rgba(168, 85, 247, 0.08) 0%, rgba(10, 18, 42, 0.9) 100%);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.05;
+  margin: 6px 0 8px;
+}
+
+.stat-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-desc {
+  font-size: 14px;
+  color: var(--ink-secondary);
+  line-height: 1.45;
+  margin-top: 4px;
+}
+
+/* Right Dedicated 3D Viewport Stage */
+.viewport-3d-stage {
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  background: #030614;
+  border: 1px solid var(--card-border);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+
+.viewport-3d-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: rgba(10, 18, 42, 0.95);
+  border-bottom: 1px solid var(--card-border);
+  z-index: 10;
+}
+
+.viewport-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.viewport-canvas-box {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  cursor: grab;
+}
+
+.viewport-canvas-box:active {
+  cursor: grabbing;
+}
+
+.viewport-3d-footer {
+  padding: 14px 20px;
+  background: rgba(10, 18, 42, 0.95);
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  z-index: 10;
+}
+
+/* Interactive Pill Buttons */
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--ink-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pill-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: var(--amber);
+}
+
+.pill-btn.primary {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #030718;
+}
+
+.pill-btn.primary:hover {
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.5);
+}
+
+/* Bottom Controls */
+.deck-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.counter-text {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.arrow-group {
+  display: flex;
+  gap: 10px;
+}
+
+.arrow-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  background: rgba(10, 18, 42, 0.85);
+  color: var(--ink-primary);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  transition: all 0.2s;
+}
+
+.arrow-btn:hover:not(:disabled) {
+  border-color: var(--amber);
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--amber);
+}
+
+.arrow-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Notes Drawer */
+.notes-modal {
+  position: absolute;
+  left: 44px;
+  bottom: 84px;
+  width: 440px;
+  padding: 22px;
+  border-radius: 20px;
+  background: rgba(8, 14, 32, 0.96);
+  border: 1px solid var(--border-gold);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  z-index: 50;
+}
+
+.notes-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.notes-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+  margin: 0;
+}
+
+.hidden {
+  display: none !important;
+}
