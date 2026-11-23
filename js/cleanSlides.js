@@ -34,25 +34,8 @@
             <p class="slide-lead">
               Studi implementasi pola hybrid metaheuristik untuk mengalokasikan tugas komputasi heterogen pada Virtual Machine.
             </p>
-            <div class="grid-3" style="max-width:960px;">
-              <div class="clean-card card-cyan">
-                <div class="stat-label">Sumber Ilmiah</div>
-                <div style="font-size:22px;font-weight:700;margin:6px 0;color:var(--cyan);">Springer Nature</div>
-                <div class="stat-desc">Journal of Cloud Computing (2026)</div>
-              </div>
-              <div class="clean-card card-gold">
-                <div class="stat-label">Metode yang Dikaji</div>
-                <div style="font-size:22px;font-weight:700;margin:6px 0;color:var(--amber);">FireBat</div>
-                <div class="stat-desc">Kombinasi Operator FA + BA + Rebalancing</div>
-              </div>
-              <div class="clean-card card-violet">
-                <div class="stat-label">Simulasi Interaktif</div>
-                <div style="font-size:22px;font-weight:700;margin:6px 0;color:var(--violet);">Visualisasi 3D</div>
-                <div class="stat-desc">Skenario alur kerja &amp; komparasi datacenter</div>
-              </div>
-            </div>
-            <div class="action-row">
-              <button class="pill-btn primary" id="btn-start">Mulai Presentasi ➔</button>
+            <div class="action-row" style="margin-top:28px;">
+              <button class="pill-btn primary" id="btn-start" style="padding:14px 28px;font-size:16px;">Mulai Presentasi ➔</button>
             </div>
           </div>
         `;
