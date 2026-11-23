@@ -70,16 +70,15 @@
     scene.add(grid);
 
     // -------------------------------------------------------------
-    // BUILD 3 ALGORITHM PODS (FA, BA, FIREBAT) SIDE-BY-SIDE
+    // BUILD 4 ALGORITHM PODS (FA, BA, HGACO, FIREBAT) SIDE-BY-SIDE
     // -------------------------------------------------------------
-    // Each Pod has 4 VM server bars (VM-1 to VM-4)
+    // Each Pod has 4 VM server bars representing the allocation profile
     const podConfigs = [
       {
         id: 'fa',
         name: 'Firefly (FA)',
         colorHex: 0x38bdf8,
-        centerX: -5.0,
-        // Load profile: Uneven, slow to converge, max makespan: 3.2
+        centerX: -6.0,
         initialH: [3.4, 2.6, 2.0, 1.4],
         finalH: [3.0, 2.4, 2.0, 1.6],
         makespan: 19.3,
@@ -89,19 +88,29 @@
         id: 'ba',
         name: 'Bat (BA)',
         colorHex: 0xa855f7,
-        centerX: 0.0,
-        // Load profile: VM-1 trapped severely in local optimum (3.6), VM-4 idle (0.8)
+        centerX: -2.0,
         initialH: [3.6, 2.2, 1.6, 0.8],
         finalH: [3.5, 2.0, 1.6, 0.9],
         makespan: 17.8,
         doi: 0.240
       },
       {
+        id: 'hgaco',
+        name: 'HGACO (GA-ACO)',
+        colorHex: 0x4ce6cf,
+        centerX: 2.0,
+        // HGACO: Positive feedback ACO causes extreme bottleneck on VM-1 (3.7), VM-4 idle (1.1)
+        initialH: [3.5, 2.5, 1.8, 1.2],
+        finalH: [3.7, 2.6, 1.9, 1.1],
+        makespan: 21.4,
+        doi: 0.554
+      },
+      {
         id: 'fb',
         name: 'FireBat (Hybrid)',
         colorHex: 0xfbbf24,
-        centerX: 5.0,
-        // Load profile: Starts with imbalance, but rebalances into clean level line (2.1)
+        centerX: 6.0,
+        // FireBat: Level balance across all VMs thanks to deviation load balancer
         initialH: [3.5, 2.2, 1.6, 0.8],
         finalH: [2.1, 2.1, 2.1, 2.1],
         makespan: 15.4,
@@ -196,10 +205,11 @@
     // CAMERA PERSPECTIVE PRESETS
     // -------------------------------------------------------------
     const CAMERA_VIEWS = {
-      all: { pos: [0, 7.5, 14], target: [0, 1.2, 0] },     // Wide view showing FA, BA, FB
-      fa: { pos: [-5.0, 5.2, 7.5], target: [-5.0, 1.2, 0] }, // Close-up on Firefly
-      ba: { pos: [0.0, 5.2, 7.5], target: [0.0, 1.2, 0] },   // Close-up on Bat
-      fb: { pos: [5.0, 5.2, 7.5], target: [5.0, 1.2, 0] }    // Close-up on FireBat
+      all: { pos: [0, 8.0, 15.5], target: [0, 1.2, 0] },     // Wide view showing FA, BA, HGACO, FB
+      fa: { pos: [-6.0, 5.2, 7.5], target: [-6.0, 1.2, 0] }, // Close-up on Firefly
+      ba: { pos: [-2.0, 5.2, 7.5], target: [-2.0, 1.2, 0] }, // Close-up on Bat
+      hgaco: { pos: [2.0, 5.2, 7.5], target: [2.0, 1.2, 0] },// Close-up on HGACO
+      fb: { pos: [6.0, 5.2, 7.5], target: [6.0, 1.2, 0] }    // Close-up on FireBat
     };
 
     let targetCamPos = new THREE.Vector3(0, 7.5, 14);
@@ -239,6 +249,10 @@
             const baP = Math.min(1, p * 3.0);
             h = cfg.initialH[j] + (cfg.finalH[j] - cfg.initialH[j]) * baP;
             if (j === 0) h = Math.max(3.3, h); // VM-1 stays trapped
+          } else if (cfg.id === 'hgaco') {
+            // HGACO: Positive feedback loop traps VM-1 in extreme bottleneck (3.7)
+            const hP = Math.min(1, p * 1.5);
+            h = cfg.initialH[j] + (cfg.finalH[j] - cfg.initialH[j]) * hP + Math.sin(iter * 0.3 + j) * 0.05;
           } else if (cfg.id === 'fb') {
             // FireBat: explores in p < 0.35, then rebalancing smoothly levels all to 2.1
             if (p < 0.35) {

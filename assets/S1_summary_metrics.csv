@@ -1,0 +1,5 @@
+algorithm,type,makespan_best,makespan_mean,makespan_worst,makespan_sd,di_mean,di_sd,arur_mean,avg_wait_mean,runtime_ms_mean,gap_lb_pct
+RASA,Deterministic,4192.50,4192.50,4192.50,0.00,0.1012,0.00,0.9435,1807.10,28,6.92
+MaxMin,Deterministic,4337.50,4337.50,4337.50,0.00,0.1082,0.00,0.9233,1773.45,22,10.62
+HGACO,Stochastic,4451.50,5000.08,5687.00,296.55,0.5541,0.0625,0.7949,1810.32,957,27.52
+FireBat,Stochastic,4058.00,4260.57,5603.00,412.44,0.0779,0.1376,0.9664,1806.66,397,8.66

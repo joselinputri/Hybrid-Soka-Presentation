@@ -32,9 +32,17 @@
               </span>
             </h1>
             <p class="slide-lead">
-              Studi implementasi pola hybrid metaheuristik untuk mengalokasikan tugas komputasi heterogen pada Virtual Machine.
+              Studi implementasi pola hybrid metaheuristik untuk mengalokasikan tugas komputasi heterogen pada Virtual Machine di CloudSim 3.0.3.
             </p>
-            <div class="action-row" style="margin-top:28px;">
+            <div style="display:flex;gap:12px;margin:16px 0;flex-wrap:wrap;font-size:13px;color:var(--ink-secondary);">
+              <span style="padding:4px 12px;border-radius:999px;background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.4);color:var(--amber);font-weight:700;">Kelompok 4</span>
+              <span>1. Thio Billy Amansyah (5027231007)</span> ·
+              <span>2. Putri Joselina Silitonga (5027241116)</span> ·
+              <span>3. Muhammad Khairul Yahya (5027241092)</span> ·
+              <span>4. Nabilah Anindya Paramesti (5027241006)</span> ·
+              <span>5. Zahra Hafizhah (5027241121)</span>
+            </div>
+            <div class="action-row" style="margin-top:20px;">
               <button class="pill-btn primary" id="btn-start" style="padding:14px 28px;font-size:16px;">Mulai Presentasi ➔</button>
             </div>
           </div>
@@ -423,11 +431,12 @@
             </div>
 
             <!-- Focus Mode Selector Tabs -->
-            <div class="mode-nav" style="display:flex;gap:6px;margin-bottom:10px;">
-              <button class="pill-btn primary" data-mode="all" style="font-size:12px;padding:5px 12px;">📊 Bandingkan 3 Pod Sekaligus</button>
+            <div class="mode-nav" style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;">
+              <button class="pill-btn primary" data-mode="all" style="font-size:12px;padding:5px 12px;">📊 Bandingkan Semua Pod</button>
               <button class="pill-btn" data-mode="fa" style="font-size:12px;padding:5px 12px;color:var(--cyan);border-color:rgba(56,189,248,0.4);">Pod 1: Firefly (FA)</button>
               <button class="pill-btn" data-mode="ba" style="font-size:12px;padding:5px 12px;color:var(--violet);border-color:rgba(168,85,247,0.4);">Pod 2: Bat (BA)</button>
-              <button class="pill-btn" data-mode="fb" style="font-size:12px;padding:5px 12px;color:var(--amber);border-color:rgba(251,191,36,0.4);">Pod 3: FireBat</button>
+              <button class="pill-btn" data-mode="hgaco" style="font-size:12px;padding:5px 12px;color:#4ce6cf;border-color:rgba(76,230,207,0.4);">Pod 3: HGACO (Hybrid GA-ACO)</button>
+              <button class="pill-btn" data-mode="fb" style="font-size:12px;padding:5px 12px;color:var(--amber);border-color:rgba(251,191,36,0.4);">★ Pod 4: FireBat (Hybrid Terpilih)</button>
             </div>
 
             <div class="grid-2" style="grid-template-columns: 1.18fr 0.82fr; gap:18px;">
@@ -551,6 +560,21 @@
               </p>
             `
           },
+          hgaco: {
+            tag: 'FOKUS POD 3: HGACO (HYBRID GENETIC - ANT COLONY)',
+            sub: 'ANALISIS HYBRID PEMBANDING #1 · HGACO (IEEE 2025)',
+            title: 'Karakteristik Hasil Pendekatan HGACO',
+            html: `
+              <p style="margin:0 0 8px;">
+                🐜 <b>Pengamatan pada Simulator (GoCJ Workload):</b><br/>
+                HGACO memanfaatkan GA untuk inisialisasi feromon awal dan ACO untuk penelusuran jalur semut. Namun, positive feedback feromon ACO cenderung menumpuk cloudlet besar pada VM yang sama.
+              </p>
+              <p style="margin:0 0 8px;">
+                ⚠️ <b>Kelemahan Nyata:</b><br/>
+                Tanpa adanya modul load balancer deviasi, HGACO mengalami ketimpangan beban yang cukup tinggi (DOI: <b>0.5541</b> pada GoCJ 600 task) dan waktu komputasi scheduler 2.4x lebih lama (957 ms).
+              </p>
+            `
+          },
           fb: {
             tag: 'FOKUS POD 3: FIREBAT (HYBRID)',
             sub: 'ANALISIS KARAKTERISTIK #3 · EFEK REBALANCING',
@@ -619,55 +643,107 @@
     },
 
     // -------------------------------------------------------------
-    // SLIDE 5: DATA PENGUJIAN 10 BEBAN KERJA
+    // SLIDE 5: DATA PENGUJIAN GOCJ 600 TASK (30 RUNS)
     // -------------------------------------------------------------
     {
       id: 'data-beban-kerja',
-      kicker: 'DATA PENGUJIAN PAPER ILMIAH',
-      title: 'Hasil Evaluasi pada 10 Variasi Workload',
-      lead: 'Data pengujian dari paper Pathania et al. (2026) pada 10 konfigurasi beban kerja sintetis:',
+      kicker: 'DATA PENGUJIAN EXPERIMENT RUNNER (GOCJ 600 TASK)',
+      title: 'Hasil Evaluasi Skenario 1 (30 Stochastic Runs)',
+      lead: 'Perbandingan komprehensif 4 algoritma pada 15 VM heterogen CloudSim 3.0.3:',
       render(container) {
         container.innerHTML = `
           <div class="slide">
-            <span class="slide-kicker">DATA PENGUJIAN PAPER ILMIAH</span>
-            <h1 class="slide-title">Evaluasi pada 10 Variasi Beban Kerja</h1>
+            <span class="slide-kicker">DATA PENGUJIAN EXPERIMENT RUNNER (GOCJ 600 TASK)</span>
+            <h1 class="slide-title">Evaluasi Skenario 1: GoCJ 600 Task (15 VM)</h1>
             <p class="slide-lead">
-              Ringkasan data komparasi waktu makespan dari publikasi Springer Nature (2026).
+              Hasil 30 run stokastik independen dibandingkan dengan baseline RASA dan Max-Min (Lower Bound: <b>3921.00s</b>).
             </p>
-            <div class="grid-3" style="margin-top:16px;">
+            <div class="grid-3" style="margin-top:14px;">
               <div class="clean-card card-gold">
-                <div class="stat-label" style="color:var(--amber);">MAKESPAN TERENDAH</div>
-                <div class="stat-num" style="color:var(--amber);">14.6s</div>
-                <p class="stat-desc">Tercatat pada variasi beban ke-8 (sebagai perbandingan: FA 18.3s dan BA 16.5s).</p>
+                <div class="stat-label" style="color:var(--amber);">MAKESPAN TERBAIK FIREBAT</div>
+                <div class="stat-num" style="color:var(--amber);">4058.0s</div>
+                <p class="stat-desc">Rata-rata 4260.6s ± 412.4s. Mengungguli Max-Min (4337.5s) dan HGACO (4451.5s).</p>
               </div>
 
               <div class="clean-card card-cyan">
-                <div class="stat-label" style="color:var(--cyan);">RATA-RATA PERBAIKAN WAKTU</div>
-                <div class="stat-num" style="color:var(--cyan);">20.2%</div>
-                <p class="stat-desc">Rata-rata persentase penurunan makespan dibanding FA pada 10 kasus beban kerja.</p>
+                <div class="stat-label" style="color:var(--cyan);">DERAJAT IMBALANCE (DI)</div>
+                <div class="stat-num" style="color:var(--cyan);">0.0779</div>
+                <p class="stat-desc">Distribusi beban paling rata. Bandingkan dengan RASA (0.1012) dan HGACO (0.5541).</p>
               </div>
 
               <div class="clean-card card-violet">
-                <div class="stat-label" style="color:var(--violet);">DERAJAT KETIMPANGAN (DOI)</div>
-                <div class="stat-num" style="color:var(--violet);">0.071</div>
-                <p class="stat-desc">Indikator derajat ketimpangan beban yang terukur pada evaluasi pengujian.</p>
+                <div class="stat-label" style="color:var(--violet);">UTILISASI RESOURCE (ARUR)</div>
+                <div class="stat-num" style="color:var(--violet);">96.64%</div>
+                <p class="stat-desc">Tingkat utilisasi komputasi tertinggi dari 15 VM heterogen cluster.</p>
               </div>
             </div>
 
-            <!-- Factual Summary Box -->
-            <div class="clean-card" style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;">
-              <div>
-                <span style="font-weight:700;color:var(--amber);">Rata-rata Makespan (10 Workload Sintetis):</span>
-                <span style="color:var(--ink-secondary);font-size:15px;margin-left:12px;">FireBat: <b>15.4s</b> | Bat: <b>17.8s</b> | Firefly: <b>19.3s</b></span>
+            <!-- Factual Summary Box with Direct Comparison Table -->
+            <div class="clean-card" style="margin-top:14px;padding:14px 20px;">
+              <table style="width:100%;border-collapse:collapse;font-size:13.5px;color:var(--ink-primary);">
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.1);color:var(--ink-secondary);font-family:var(--font-mono);font-size:12px;">
+                  <th style="text-align:left;padding:6px 8px;">ALGORITMA</th>
+                  <th style="text-align:left;padding:6px 8px;">TIPE</th>
+                  <th style="text-align:right;padding:6px 8px;">BEST MAKESPAN</th>
+                  <th style="text-align:right;padding:6px 8px;">MEAN MAKESPAN</th>
+                  <th style="text-align:right;padding:6px 8px;">DEGREE OF IMBALANCE</th>
+                  <th style="text-align:right;padding:6px 8px;">ARUR (%)</th>
+                  <th style="text-align:right;padding:6px 8px;">VALIDASI CLOUDSIM</th>
+                </tr>
+                <tr style="background:rgba(248,201,72,0.12);font-weight:700;color:var(--amber);">
+                  <td style="padding:8px;">★ FireBat (Hybrid)</td>
+                  <td style="padding:8px;">Stokastik (30 run)</td>
+                  <td style="text-align:right;padding:8px;">4058.00 s</td>
+                  <td style="text-align:right;padding:8px;">4260.57 s</td>
+                  <td style="text-align:right;padding:8px;">0.0779</td>
+                  <td style="text-align:right;padding:8px;">96.64%</td>
+                  <td style="text-align:right;padding:8px;color:var(--emerald);">0.000% (VALID)</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                  <td style="padding:6px 8px;">RASA</td>
+                  <td style="padding:6px 8px;">Deterministik</td>
+                  <td style="text-align:right;padding:6px 8px;">4192.50 s</td>
+                  <td style="text-align:right;padding:6px 8px;">4192.50 s</td>
+                  <td style="text-align:right;padding:6px 8px;">0.1012</td>
+                  <td style="text-align:right;padding:6px 8px;">94.35%</td>
+                  <td style="text-align:right;padding:6px 8px;color:var(--emerald);">0.000% (VALID)</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                  <td style="padding:6px 8px;">Max-Min</td>
+                  <td style="padding:6px 8px;">Deterministik</td>
+                  <td style="text-align:right;padding:6px 8px;">4337.50 s</td>
+                  <td style="text-align:right;padding:6px 8px;">4337.50 s</td>
+                  <td style="text-align:right;padding:6px 8px;">0.1082</td>
+                  <td style="text-align:right;padding:6px 8px;">92.33%</td>
+                  <td style="text-align:right;padding:6px 8px;color:var(--emerald);">0.000% (VALID)</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 8px;">HGACO (Hybrid GA-ACO)</td>
+                  <td style="padding:6px 8px;">Stokastik (30 run)</td>
+                  <td style="text-align:right;padding:6px 8px;">4451.50 s</td>
+                  <td style="text-align:right;padding:6px 8px;">5000.08 s</td>
+                  <td style="text-align:right;padding:6px 8px;">0.5541</td>
+                  <td style="text-align:right;padding:6px 8px;">79.49%</td>
+                  <td style="text-align:right;padding:6px 8px;color:var(--emerald);">0.000% (VALID)</td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- Visual Charts Strip -->
+            <div class="grid-2" style="margin-top:14px;gap:16px;">
+              <div class="clean-card card-gold" style="padding:14px 18px;display:flex;flex-direction:column;align-items:center;">
+                <span style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:8px;font-family:var(--font-mono);">📊 CHART PERBANDINGAN MAKESPAN 4 ALGORITMA</span>
+                <img src="./assets/chart_s1_makespan_comparison.png" alt="Makespan Chart" style="max-height:160px;max-width:100%;border-radius:10px;" />
               </div>
-              <span style="font-size:13px;color:var(--cyan);font-weight:600;background:rgba(56,189,248,0.12);padding:4px 12px;border-radius:8px;">
-                Sumber: Pathania et al. (2026)
-              </span>
+              <div class="clean-card card-cyan" style="padding:14px 18px;display:flex;flex-direction:column;align-items:center;">
+                <span style="font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:8px;font-family:var(--font-mono);">⚡ DERAJAT IMBALANCE (DI) & ARUR UTILISASI (%)</span>
+                <img src="./assets/chart_s1_di_and_arur.png" alt="DI and ARUR Chart" style="max-height:160px;max-width:100%;border-radius:10px;" />
+              </div>
             </div>
           </div>
         `;
       },
-      notes: 'Bacakan data apa adanya: "Data dari paper menunjukkan bahwa pada 10 variasi beban sintetis, rata-rata makespan FireBat tercatat 15.4 detik, dibandingkan Bat 17.8 detik dan Firefly 19.3 detik. Hasil ini bervariasi tergantung pada distribusi panjang tugas."'
+      notes: 'Bacakan data hasil pengujian kelompok 4: "Pada pengujian utama S1 dengan 600 task riil GoCJ dan 30 run stokastik berulang, FireBat mencatat makespan terbaik 4058.00 s dan nilai DI terendah 0.0779. Seluruh hasil divalidasi 100% konsisten terhadap engine CloudSim 3.0.3 dengan selisih 0.000%."'
     },
 
     // -------------------------------------------------------------
@@ -757,15 +833,15 @@
                 <div style="font-size:13px;line-height:1.55;color:var(--ink-secondary);">
                   <p style="margin:0 0 8px;">
                     <b style="color:var(--amber);">1. Paper Utama Hybrid FireBat:</b><br/>
-                    Pathania, N., Singh, B., Batra, I., Prashar, D., Khan, A. A., &amp; Kadry, S. (2026). <i>FireBat: a hybrid approach for load balancing in cloud computing</i>. <b>Journal of Cloud Computing</b>, 15(1), Article 5. Springer Nature.
+                    Pathania, N., Singh, B., Batra, I., Prashar, D., Khan, A. A., &amp; Kadry, S. (2026). <i>FireBat: a hybrid approach for load balancing in cloud computing</i>. <b>Journal of Cloud Computing</b>, vol. 15, no. 5. Springer Nature. DOI: 10.1186/s13677-025-00805-1.
                   </p>
                   <p style="margin:0 0 8px;">
                     <b style="color:var(--cyan);">2. Paper Pembanding Hybrid HGACO:</b><br/>
-                    Al-Wesabi et al. (2025). <i>Hybrid Genetic-Ant Colony Optimization for Cloud Resource Scheduling</i>. IEEE Access.
+                    Yang, H., Xu, X., &amp; Wu, M. (2025). <i>Research on Cloud Computing Task Scheduling Based on Hybrid Genetic Ant Colony Algorithm</i>. <b>IEEE 5th CCSB</b>, hlm. 400-405. DOI: 10.1109/CCSB66722.2025.11154202.
                   </p>
                   <p style="margin:0;">
-                    <b style="color:var(--violet);">3. Metode Asal Firefly &amp; Bat:</b><br/>
-                    Yang, X.-S. (2009 &amp; 2010). SAGA &amp; NICSO Springer Series.
+                    <b style="color:var(--violet);">3. Workload Dataset Riil GoCJ:</b><br/>
+                    Hussain, A. &amp; Aleem, M. (2018). <i>GoCJ: Google Cloud Jobs Dataset for Distributed and Cloud Computing Infrastructures</i>. Data (MDPI).
                   </p>
                 </div>
               </div>

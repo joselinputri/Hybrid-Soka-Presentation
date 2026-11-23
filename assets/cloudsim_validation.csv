@@ -1,0 +1,5 @@
+algorithm,analytical_makespan,cloudsim_makespan,relative_error_pct,status
+RASA,4192.5000,4192.5000,0.0000,VALID (< 1%)
+Max-Min,4337.5000,4337.5000,0.0000,VALID (< 1%)
+HGACO (Best),4834.5000,4834.5000,0.0000,VALID (< 1%)
+FireBat (Best),4078.0000,4078.0000,0.0000,VALID (< 1%)
